@@ -7,7 +7,7 @@
 void selection_sort(int *array, size_t size)
 {
 	size_t i, j;
-	int minimum;
+	int minimum, tmp;
 
 	if (size < 2 || !array)
 		return;
@@ -20,18 +20,9 @@ void selection_sort(int *array, size_t size)
 			if (array[j] < array[minimum])
 				minimum = j;
 		}
-		swap_int(&array[minimum], &array[i]);
+		tmp = array[minimum];
+		array[minimum] = array[i];
+		array[i] = tmp;
 		print_array(array, size);
 	}
-}
-/**
- * swap_int - Entry point
- *@a: integer
- *@b: integer
- */
-void swap_int(int *a, int *b)
-{
-	int c = *a;
-	*a = *b;
-	*b = c;
 }
