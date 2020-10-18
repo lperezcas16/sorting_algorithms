@@ -2,7 +2,7 @@
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
 
-<div align="center"><img src="images/git_sort.gif" width="500" height="300"/>
+<div align="center"><img src="images/git_sort.gif" width="500" height="450"/>
 
 # Sorting algorithms & Big O 
 
