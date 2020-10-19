@@ -6,10 +6,10 @@
  */
 void selection_sort(int *array, size_t size)
 {
-	size_t i, j;
-	int minimum, tmp;
+	size_t i, j = 0;
+	int minimum = 0, tmp = 0;
 
-	if (size < 2 || !array)
+	if (size < 2 || array == NULL)
 		return;
 
 	for (i = 0; i < size - 1; i++)
