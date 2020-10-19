@@ -1,37 +1,49 @@
 #include "sort.h"
 /**
- * selection_sort - sorts an array of integers in ascending order
- * @array: array of integers
- * @size: size of array
+ * init - Head node of a linked list
+ * @tmp: node in linked list
+ *
+ * Return: Head of linked list
  */
-void selection_sort(int *array, size_t size)
+listint_t *init(listint_t *tmp)
 {
-	size_t i, j;
-	int minimum;
-
-	if (size < 2 || !array)
-		return;
-
-	for (i = 0; i < size - 1; i++)
-	{
-		minimum = i;
-		for (j = i + 1; j < size; j++)
-		{
-			if (array[j] < array[minimum])
-				minimum = j;
-		}
-		swap_int(&array[minimum], &array[i]);
-		print_array(array, size);
-	}
+	while (tmp->prev)
+		tmp = tmp->prev;
+	return (tmp);
 }
 /**
- * swap_int - Entry point
- *@a: integer
- *@b: integer
+ * insertion_sort_list - sorts an array of integers in ascending order
+ * @list: list
+ *
+ * Return: void
  */
-void swap_int(int *a, int *b)
+void insertion_sort_list(listint_t **list)
 {
-	int c = *a;
-	*a = *b;
-	*b = c;
+	listint_t *aux_node = NULL, *tmp, *aux;
+
+	if (!list)
+	{
+		return;
+	}
+	aux_node = init(*list);
+
+	for (aux_node = aux_node->next; aux_node;)
+	{
+		tmp = aux_node->next;
+		while (aux_node->prev && aux_node->n < aux_node->prev->n)
+		{
+			aux = aux_node->prev;
+			aux->next = aux_node->next;
+			aux_node->prev = aux->prev;
+			aux->prev = aux_node;
+			aux_node->next = aux;
+			if (aux->next)
+				aux->next->prev = aux;
+			if (aux_node->prev)
+				aux_node->prev->next = aux_node;
+			print_list(init(*list));
+		}
+		aux_node = tmp;
+	}
+	*list = init(*list);
 }

@@ -3,7 +3,7 @@
 	gcc -Wall -Wextra -Werror -pedantic 0-bubble_sort.c 0-main.c print_array.c -o bubble && ./bubble
 1:
 	clear;
-	gcc -Wall -Wextra -Werror -pedantic 1-main.c 1-insertion_sort_list.c print_list.c -o insertion && ./insertion
+	gcc -Wall -Wextra -Werror -pedantic -g 1-main.c 1-insertion_sort_list.c print_list.c -o insertion && ./insertion
 2:
 	clear;
 	gcc -Wall -Wextra -Werror -pedantic 2-main.c 2-selection_sort.c print_array.c -o select && ./select
