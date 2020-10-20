@@ -1,5 +1,7 @@
 0:
 	clear;
+	betty 0-bubble_sort.c
+	echo *****************************************************;
 	gcc -Wall -Wextra -Werror -pedantic 0-bubble_sort.c 0-main.c print_array.c -o bubble && ./bubble
 1:
 	clear;
