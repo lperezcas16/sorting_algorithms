@@ -1,44 +1,70 @@
 #include "sort.h"
 /**
- * partition - Partition
- * 
+ * swap - Function for swap
+ * @array: Array of integers
+ * @i: first element of array
+ * @j: Last element of array
+ * @size: Size of array
+ * Return: void
  */
-size_t partition(int *array, size_t first, size_t last)
+void swap(int *array, int i, int j, int size)
 {
-	size_t pivot;
-	size_t i, aux;
+	int aux;
+
+	if (array[i] == array[j])
+		return;
+	aux = array[i];
+	array[i] = array[j];
+	array[j] = aux;
+	print_array(array, size);
+}
+/**
+ * partition - Partition
+ * @array: Array of integers
+ * @first: first element of array
+ * @last: Last element of array
+ * @size: Size of array
+ * Return: int (split)
+ */
+int partition(int *array, int first, int last, int size)
+{
+	int pivot = array[last];
+	int split = first, idx;
+
+	for (idx = first; idx < last; idx++)
+		if (array[idx] < pivot)
+			swap(array, split++, idx, size);
+	swap(array, split, last, size);
+	return (split);
+}
+/**
+ * recursive - Function for recurtion
+ * @array: Array of integers
+ * @first: first element of array
+ * @last: Last element of array
+ * @size: Size of array
+ * Return: void
+ */
+void recursive(int *array, int first, int last, size_t size)
+{
+	int pivot;
 
 	if (first < last)
 	{
-		pivot = array[first];
-		for (i = pivot + 1; array[i]; i++)
-		{
-			if (pivot < array[i])
-			{
-				aux = pivot;
-				pivot = array[i];
-				array[i] = aux;
-			}
-		}
+		pivot = partition(array, first, last, size);
+
+		recursive(array, first, pivot - 1, size);
+		recursive(array, pivot + 1, last, size);
 	}
-	return (pivot);
 }
 /**
  * quick_sort - sorts an array of integers in ascending order
  * @array: array of integers
  * @size: size of the array
- * 
+ *
  * Return - void
  */
 void quick_sort(int *array, size_t size)
 {
-	size_t pivot;
-
-	if (!array || size < 2)
-		return;
-
-	pivot = partition(array, 0, size - 1);
-
-	quick_sort(array, pivot - 1);
-	quick_sort(array, pivot + 1);
+	recursive(array, 0, size - 1, size);
 }
