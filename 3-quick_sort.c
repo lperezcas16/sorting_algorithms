@@ -1,70 +1,91 @@
 #include "sort.h"
-/**
- * swap - Function for swap
- * @array: Array of integers
- * @i: first element of array
- * @j: Last element of array
- * @size: Size of array
- * Return: void
- */
-void swap(int *array, int i, int j, int size)
-{
-	int aux;
 
-	if (array[i] == array[j])
-		return;
-	aux = array[i];
-	array[i] = array[j];
-	array[j] = aux;
-	print_array(array, size);
-}
-/**
- * partition - Partition
- * @array: Array of integers
- * @first: first element of array
- * @last: Last element of array
- * @size: Size of array
- * Return: int (split)
- */
-int partition(int *array, int first, int last, int size)
-{
-	int pivot = array[last];
-	int split = first, idx;
+void quicksort(int *array, size_t size, int lo, int hi);
+int partition(int *array, size_t size, int lo, int hi);
+void swap(int *a, int *b, int *array, size_t size);
 
-	for (idx = first; idx < last; idx++)
-		if (array[idx] < pivot)
-			swap(array, split++, idx, size);
-	swap(array, split, last, size);
-	return (split);
-}
-/**
- * recursive - Function for recurtion
- * @array: Array of integers
- * @first: first element of array
- * @last: Last element of array
- * @size: Size of array
- * Return: void
- */
-void recursive(int *array, int first, int last, size_t size)
-{
-	int pivot;
-
-	if (first < last)
-	{
-		pivot = partition(array, first, last, size);
-
-		recursive(array, first, pivot - 1, size);
-		recursive(array, pivot + 1, last, size);
-	}
-}
 /**
  * quick_sort - sorts an array of integers in ascending order
- * @array: array of integers
- * @size: size of the array
+ *              using the Quick sort algorithm
+ * @array: the array to be sorted
+ * @size: the total len of the array
  *
- * Return - void
+ * Return: Void
  */
 void quick_sort(int *array, size_t size)
 {
-	recursive(array, 0, size - 1, size);
+	/*array, size, lo,  hi*/
+	quicksort(array, size, 0, size - 1);
+}
+
+/**
+ * quicksort - sorts an array of integers in ascending order
+ *             using the Quick sort algorithm with Lamuto partition scheme
+ * @array: the array to be sorted
+ * @size: the total len of the array
+ * @lo: the inferior limit of the subarray
+ * @hi: the upper limit of the subarray
+ *
+ * Return: Void
+ */
+void quicksort(int *array, size_t size, int lo, int hi)
+{
+	int p;
+
+	if (lo < hi)
+	{
+		// printf("low -> %d  - high -> %d\n", lo, hi);
+		p = partition(array, size, lo, hi);
+		// printf("P -> %d\n ", p);
+
+		quicksort(array, size, lo, p - 1);
+		quicksort(array, size, p + 1, hi);
+	}
+}
+
+/**
+ * partition - lamuto partition scheme
+ * @array: the array to be sorted
+ * @size: the total len of the array
+ * @lo: the inferior limit of the subarray
+ * @hi: the upper limit of the subarray
+ *
+ * Return: int index where the partition occurs
+ */
+int partition(int *array, size_t size, int lo, int hi)
+{
+	int pivot = array[hi], i = lo, j;
+
+	for (j = lo; j < hi; j++)
+	{
+		if (array[j] < pivot)
+		{
+			if (i != j)
+				swap(array + i, array + j, array, size);
+			i++;
+		}
+	}
+	swap(array + i, array + hi, array, size);
+
+	return (i);
+}
+
+/**
+ * swap - swaps two elements of the array
+ * @a: the first element to be swaped with @b
+ * @b: the second element to be swaped with @a
+ * @array: the array to be sorted
+ * @size: the total len of the array
+ *
+ * Return: Void
+ */
+void swap(int *a, int *b, int *array, size_t size)
+{
+	int c;
+
+	c = *a;
+	*a = *b;
+	*b = c;
+
+	print_array((const int *)array, size);
 }
